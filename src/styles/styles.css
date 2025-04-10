@@ -90,20 +90,12 @@ header {
 .button:hover {
     background-color: #45a049;
 }
-#checkout-button {
+.product img {
+    max-width: 150px; /* Ajusta el ancho máximo */
+    max-height: 150px; /* Ajusta el alto máximo */
+    object-fit: cover; /* Asegura que la imagen mantenga su proporción */
     display: block;
-    margin: 20px auto;
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-#checkout-button:hover {
-    background-color: #218838;
+    margin: 0 auto; /* Centra la imagen */
 }
 
 @media (max-width: 300px) {
