@@ -67,14 +67,27 @@ function simulatePayment() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    const checkoutButton = document.getElementById("checkout-button");
-    const cartItems = document.getElementById("cart-items");
+    // Función para cargar contenido HTML en una sección
+    const loadContent = (url, target) => {
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error al cargar ${url}: ${response.statusText}`);
+                }
+                return response.text();
+            })
+            .then(html => {
+                document.querySelector(target).innerHTML = html;
+            })
+            .catch(error => console.error(error));
+    };
 
-    if (cartItems.children.length === 0) {
-        console.log("El carrito está vacío. El botón no se mostrará.");
-        checkoutButton.style.display = "none";
-    } else {
-        console.log("El carrito tiene productos. Mostrando el botón.");
-        checkoutButton.style.display = "block";
-    }
+    // Cargar el menú de productos
+    loadContent("components/menu.html", "#menu");
+
+    // Cargar el carrito de compras
+    loadContent("components/cart.html", "#cart");
+
+    // Cargar el formulario de pago
+    loadContent("components/payment.html", "#payment");
 });
