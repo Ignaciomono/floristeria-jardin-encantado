@@ -96,6 +96,22 @@ document.addEventListener("DOMContentLoaded", () => {
             })
             .then(html => {
                 document.querySelector(target).innerHTML = html;
+
+                // Agregar manejador de eventos al formulario de pago si se carga
+                if (target === "#payment") {
+                    const paymentForm = document.getElementById("payment-form");
+                    if (paymentForm) {
+                        paymentForm.addEventListener("submit", (event) => {
+                            event.preventDefault(); // Evita el envío del formulario
+                            const confirmation = confirm("¿Estás seguro de que deseas confirmar el pago?");
+                            if (confirmation) {
+                                document.getElementById("payment-message").innerText = "Pago confirmado. ¡Gracias!";
+                            } else {
+                                document.getElementById("payment-message").innerText = "Pago cancelado.";
+                            }
+                        });
+                    }
+                }
             })
             .catch(error => console.error(error));
     };
