@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menú de Productos - Floristería Jardín Encantado</title>
+    <link rel="stylesheet" href="../styles/styles.css">
+</head>
+<body>
+    <div class="menu-container">
+        <h1>Menú de Productos</h1>
+        <div class="product" id="product1">
+            <img src="../assets/flower1.jpg" alt="Ramo de Rosas">
+            <h2>Ramo de Rosas</h2>
+            <p>Un hermoso ramo de rosas frescas.</p>
+            <p>Precio: $20.00</p>
+            <button onclick="addToCart('Ramo de Rosas', 20.00)">Agregar al Carrito</button>
+        </div>
+        <div class="product" id="product2">
+            <img src="../assets/flower2.jpg" alt="Orquídeas">
+            <h2>Orquídeas</h2>
+            <p>Elegantes orquídeas para cualquier ocasión.</p>
+            <p>Precio: $30.00</p>
+            <button onclick="addToCart('Orquídeas', 30.00)">Agregar al Carrito</button>
+        </div>
+        <div class="product" id="product3">
+            <img src="../assets/flower3.jpg" alt="Tulipanes">
+            <h2>Tulipanes</h2>
+            <p>Coloridos tulipanes para alegrar tu día.</p>
+            <p>Precio: $15.00</p>
+            <button onclick="addToCart('Tulipanes', 15.00)">Agregar al Carrito</button>
+        </div>
+        <!-- Agregar más productos según sea necesario -->
+    </div>
+    <script src="../scripts/app.js"></script>
+</body>
+</html>

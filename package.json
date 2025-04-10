@@ -1,0 +1,15 @@
+{
+  "name": "floristeria-jardin-encantado",
+  "version": "1.0.0",
+  "description": "A responsive web application for Floristería Jardín Encantado, allowing users to view products, add them to a shopping cart, and simulate electronic payments.",
+  "main": "src/index.html",
+  "scripts": {
+    "start": "http-server src",
+    "build": "echo 'Build step can be added here'"
+  },
+  "dependencies": {
+    "http-server": "^0.12.3"
+  },
+  "author": "Your Name",
+  "license": "MIT"
+}
