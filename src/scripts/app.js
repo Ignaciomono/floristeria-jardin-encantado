@@ -24,41 +24,59 @@ function displayProducts() {
     });
 }
 
-function addToCart(productId) {
-    const product = products.find(p => p.id === productId);
-    const cartItem = cart.find(item => item.id === productId);
-    if (cartItem) {
-        cartItem.quantity++;
+function addToCart(productName, productPrice) {
+    const product = {
+        name: productName,
+        price: productPrice,
+        quantity: 1
+    };
+
+    // Verificar si el producto ya está en el carrito
+    const existingProduct = cart.find(item => item.name === productName);
+    if (existingProduct) {
+        existingProduct.quantity++;
     } else {
-        cart.push({ ...product, quantity: 1 });
+        cart.push(product);
     }
-    updateCart();
+
+    // Guardar el carrito en localStorage
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartUI();
 }
 
-function removeFromCart(productId) {
-    cart = cart.filter(item => item.id !== productId);
-    updateCart();
-}
-
-function updateCart() {
-    const cartContainer = document.getElementById('cart');
-    cartContainer.innerHTML = '';
+function updateCartUI() {
+    const cartItemsContainer = document.getElementById('cart-items');
+    const totalAmountElement = document.getElementById('total-amount');
+    cartItemsContainer.innerHTML = '';
     let total = 0;
+
     cart.forEach(item => {
-        total += item.price * item.quantity;
-        const cartItemElement = document.createElement('div');
-        cartItemElement.className = 'cart-item';
-        cartItemElement.innerHTML = `
-            <h4>${item.name} (x${item.quantity})</h4>
-            <p>Precio: $${item.price * item.quantity}</p>
-            <button onclick="removeFromCart(${item.id})">Eliminar</button>
+        const itemElement = document.createElement('div');
+        itemElement.innerHTML = `
+            <p>${item.name} (x${item.quantity}) - Precio: $${(item.price * item.quantity).toFixed(2)}</p>
+            <button onclick="removeFromCart('${item.name}')">Eliminar</button>
         `;
-        cartContainer.appendChild(cartItemElement);
+        cartItemsContainer.appendChild(itemElement);
+        total += item.price * item.quantity;
     });
-    const totalElement = document.createElement('div');
-    totalElement.innerHTML = `<h3>Total: $${total}</h3>`;
-    cartContainer.appendChild(totalElement);
+
+    totalAmountElement.textContent = `$${total.toFixed(2)}`;
 }
+
+function removeFromCart(productName) {
+    cart = cart.filter(item => item.name !== productName);
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCartUI();
+}
+
+// Cargar el carrito desde localStorage al cargar la página
+window.onload = function () {
+    const storedCart = localStorage.getItem('cart');
+    if (storedCart) {
+        cart = JSON.parse(storedCart);
+        updateCartUI();
+    }
+};
 
 function simulatePayment() {
     alert("Pago simulado exitosamente. ¡Gracias por su compra!");
