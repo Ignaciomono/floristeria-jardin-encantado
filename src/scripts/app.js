@@ -66,7 +66,15 @@ function simulatePayment() {
     updateCart();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    displayProducts();
-    document.getElementById('pay-button').addEventListener('click', simulatePayment);
+document.addEventListener("DOMContentLoaded", () => {
+    const checkoutButton = document.getElementById("checkout-button");
+    const cartItems = document.getElementById("cart-items");
+
+    if (cartItems.children.length === 0) {
+        console.log("El carrito está vacío. El botón no se mostrará.");
+        checkoutButton.style.display = "none";
+    } else {
+        console.log("El carrito tiene productos. Mostrando el botón.");
+        checkoutButton.style.display = "block";
+    }
 });

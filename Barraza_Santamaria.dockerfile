@@ -15,10 +15,10 @@ RUN apt-get update && apt-get install -y \
     git
 
 # Clonar el repositorio de GitHub (reemplaza con tu URL)
-RUN git clone https://github.com/tu_usuario/tu_repositorio.git /tmp/html
+RUN git clone https://github.com/Ignaciomono/floristeria-jardin-encantado.git /tmp/html
 
 # Limpiar el directorio de Apache y mover los archivos HTML
-RUN rm -rf /var/www/html/ && mv /tmp/html/ /var/www/html/ 
+RUN rm -rf /var/www/html/* && mv /tmp/html/src/* /var/www/html/ 
 
 # Exponer el puerto 80
 EXPOSE 80
