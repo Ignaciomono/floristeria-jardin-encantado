@@ -20,34 +20,62 @@ floristeria-jardin-encantado
 │   │   └── payment.html    # Estructura de la simulación de pago
 │   └── assets              # Recursos adicionales utilizados en el proyecto
 │       └── README.md       # Documentación sobre los activos
-├── docker                  # Carpeta que contiene la configuración de Docker
-│   └── ApellidoE1_ApellidoE2.dockerfile # Configuración para desplegar la aplicación
 ├── package.json            # Configuración de npm y dependencias
 ├── README.md               # Documentación general del proyecto
 └── .gitignore              # Archivos y directorios a ignorar por Git
 ```
 
 ## Instalación
-Para ejecutar la aplicación localmente, sigue estos pasos:
+Para ejecutar la aplicación localmente, en docker play ground, sigue los siguientes pasos:
 
-1. Clona el repositorio:
+1. Descargar git y nano:
    ```
-   git clone https://github.com/tu_usuario/floristeria-jardin-encantado.git
-   ```
-
-2. Navega al directorio del proyecto:
-   ```
-   cd floristeria-jardin-encantado
+   apk add git
+   apk add nano
    ```
 
-3. Instala las dependencias:
+2. Crea el dockerfile:
    ```
-   npm install
+   nano Dockerfile
+   ```
+
+3. Dentro del dockerfile copiar lo siguiente:
+   ```
+   # Usar una imagen base de Ubuntu
+   FROM ubuntu:latest
+   
+   # Evitar prompts interactivos durante la instalación
+   ENV DEBIAN_FRONTEND=noninteractive
+   
+   # Instalar Apache, MySQL, PHP y git
+   RUN apt-get update && apt-get install -y \
+       apache2 \
+       mysql-server \
+       php \
+       libapache2-mod-php \
+       php-mysql \
+       git
+   
+   # Clonar el repositorio de GitHub (reemplaza con tu URL)
+   RUN git clone https://github.com/Ignaciomono/floristeria-jardin-encantado.git /tmp/html
+   
+   # Limpiar el directorio de Apache y mover los archivos HTML
+   RUN rm -rf /var/www/html/* && mv /tmp/html/src/* /var/www/html/ 
+   
+   # Exponer el puerto 80
+   EXPOSE 80
+   
+   # Iniciar Apache y MySQL al arrancar el contenedor
+   CMD service mysql start && apache2ctl -D FOREGROUND
    ```
 
 4. Inicia la aplicación:
    ```
-   npm start
+   docker build -t Flores-web .
+
+   docker run -d -p 80:80 Flores-web
+
+   proceder a abrir el puerto 80 en docker
    ```
 
 ## Características
@@ -56,10 +84,7 @@ Para ejecutar la aplicación localmente, sigue estos pasos:
 - Simulación de un proceso de pago con un formulario de entrada.
 
 ## Uso
-Accede a la aplicación a través de tu navegador en `http://localhost:3000` (o el puerto que hayas configurado). Explora los productos, agrega artículos al carrito y simula un pago para completar la experiencia de compra.
+Accede a la aplicación a través de tu navegador en `http://localhost:80` (o el puerto que hayas configurado). Explora los productos, agrega artículos al carrito y simula un pago para completar la experiencia de compra.
 
 ## Contribuciones
 Las contribuciones son bienvenidas. Si deseas contribuir, por favor abre un issue o envía un pull request.
-
-## Licencia
-Este proyecto está bajo la Licencia MIT.
